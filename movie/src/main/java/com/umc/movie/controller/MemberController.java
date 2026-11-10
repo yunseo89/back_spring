@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.umc.movie.dto.MemberInfoResponse;
+import com.umc.movie.interceptor.AuthInterceptor;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import com.umc.movie.dto.MemberUpdateRequest;
+import org.springframework.web.bind.annotation.PatchMapping;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,6 +28,30 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     private final MemberService memberService;
+
+    @PatchMapping("/me")
+    public ResponseEntity<ApiResponse<MemberInfoResponse>> updateMyInfo(
+            @RequestAttribute(AuthInterceptor.MEMBER_ID) Long memberId,
+            @Valid @RequestBody MemberUpdateRequest request
+    ) {
+        MemberInfoResponse response =
+                memberService.updateMyInfo(memberId, request);
+
+        return ResponseEntity.ok(
+                ApiResponse.ok("회원 정보를 수정했습니다.", response)
+        );
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<MemberInfoResponse>> getMyInfo(
+            @RequestAttribute(AuthInterceptor.MEMBER_ID) Long memberId
+    ) {
+        MemberInfoResponse response = memberService.getMyInfo(memberId);
+
+        return ResponseEntity.ok(
+                ApiResponse.ok("회원 정보를 조회했습니다.", response)
+        );
+    }
 
     @GetMapping("/nickname/{nickname}")
     public NicknameCheckResponse checkNickname(
