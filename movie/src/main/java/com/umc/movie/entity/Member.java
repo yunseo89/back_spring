@@ -14,6 +14,9 @@ import lombok.Builder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
