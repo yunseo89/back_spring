@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: ${TEST_DB_URL:jdbc:h2:mem:week8_test;MODE=MySQL;DB_CLOSE_DELAY=-1}
+    username: ${TEST_DB_USERNAME:sa}
+    password: ${TEST_DB_PASSWORD:}
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:week8-schema.sql
+  jpa:
+    hibernate:
+      ddl-auto: validate
+jwt:
+  secret: week8-test-only-secret-key-32-bytes-minimum-do-not-use-in-production
+  access-expiration: 3600

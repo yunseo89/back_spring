@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Local credentials ###
+.env
+.env.*
+!.env.example
+application-local.yml
+*.postman_environment.json
